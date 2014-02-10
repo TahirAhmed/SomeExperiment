@@ -17,10 +17,6 @@
 			//eventmanager.toggleListeners(main.container, main.events, true);
 			eventmanager.toggleListeners(main.topCenterWidget, main.events, true);
 			//eventmanager.toggleListeners(main.topLeftWidget, main.events, true);
-			//main.toggleListeners(main.mainContainer, main.events, true);
-			//main.toggleListeners(main.container, main.events, true);
-			//main.toggleListeners(main.topCenterWidget, main.events, true);
-			//main.toggleListeners(main.topLeftWidget, main.events, true);
 		},
 		onEnterDesktop: function() { /*console.log('main.onEnterDesktop');*/ },
 		onExitDesktop: function() { /*console.log('main.onExitDesktop');*/ },

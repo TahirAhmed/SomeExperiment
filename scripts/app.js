@@ -13,15 +13,22 @@
 	window.utils = utils;
 })(window);;(function(window, document) {
 	var constants = {
-		className_mainContainer: 'main-container',
+		breakpoint_MobileTablet: 768,
+		breakpoint_TabletLaptop: 980,
+		breakpoint_LaptopDesktop: 1200,
+		breakpointLabel_Mobile: 'mobile',
+		breakpointLabel_Tablet: 'tablet',
+		breakpointLabel_Laptop: 'laptop',
+		breakpointLabel_Desktop: 'desktop',
 		className_container: 'container',
+		className_mainContainer: 'main-container',
 		className_topCenterWidget: 'top-center-widget',
 		className_topLeftWidget: 'top-left-widget',
 		isAddEventListenerAvailable: !!(('addEventListener' in window)),
-		isQuerySelectorAvailable: !!(('querySelector' in document)),
 		isAttachEventAvailable: !!(('attachEvent' in document)),
-		prefix_on: 'on',
-		prefix_classSelector: '.'
+		isQuerySelectorAvailable: !!(('querySelector' in document)),
+		prefix_classSelector: '.',
+		prefix_on: 'on'
 	};
 	window.constants = constants;
 })(window, document);;/*global jRespond */
@@ -49,21 +56,41 @@
 		},
 		setupBreakpoints: function() {
 			resizemanager.jRes = jRespond([
-				{label: 'mobile', enter: 0, exit: 767},
-				{label: 'tablet', enter: 768, exit: 979},
-				{label: 'laptop', enter: 980, exit: 1199},
-				{label: 'desktop', enter: 1200, exit: 10000}
+				{label: constants.breakpointLabel_Mobile, enter: 0, exit: constants.breakpoint_MobileTablet-1},
+				{label: constants.breakpointLabel_Tablet, enter: constants.breakpoint_MobileTablet, exit: constants.breakpoint_TabletLaptop-1},
+				{label: constants.breakpointLabel_Laptop, enter: constants.breakpoint_TabletLaptop, exit: constants.breakpoint_LaptopDesktop-1},
+				{label: constants.breakpointLabel_Desktop, enter: constants.breakpoint_LaptopDesktop, exit: 10000}
 			]);
 			resizemanager.jRes.addFunc([
-				{breakpoint: 'desktop', enter: function() { resizemanager.onEnterDesktop(); }, exit: function() { resizemanager.onExitDesktop(); }},
-				{breakpoint: 'laptop', enter: function() { resizemanager.onEnterLaptop(); }, exit: function() { resizemanager.onExitLaptop(); }},
-				{breakpoint: 'tablet', enter: function() { resizemanager.onEnterTablet(); }, exit: function() { resizemanager.onExitTablet(); }},
-				{breakpoint: 'mobile', enter: function() { resizemanager.onEnterMobile(); }, exit: function() { resizemanager.onExitMobile(); }}
+				{breakpoint: constants.breakpointLabel_Desktop, enter: function() { resizemanager.onEnterDesktop(); }, exit: function() { resizemanager.onExitDesktop(); }},
+				{breakpoint: constants.breakpointLabel_Laptop, enter: function() { resizemanager.onEnterLaptop(); }, exit: function() { resizemanager.onExitLaptop(); }},
+				{breakpoint: constants.breakpointLabel_Tablet, enter: function() { resizemanager.onEnterTablet(); }, exit: function() { resizemanager.onExitTablet(); }},
+				{breakpoint: constants.breakpointLabel_Mobile, enter: function() { resizemanager.onEnterMobile(); }, exit: function() { resizemanager.onExitMobile(); }}
 			]);
 		}
 	};
 	window.resizemanager = resizemanager;
-})(window);;(function(window, document) {
+})(window);;(function(){
+	var eventmanager = {
+		toggleListeners: function(targetDIV, eventsArray, isAssigning) {
+			var length = eventsArray.length, type = '', callback = null, i = 0;
+			for (i; i < length; i++) {
+				type = eventsArray[i].type;
+				callback = eventsArray[i].callback;
+				if (isAssigning) {
+					if (constants.isAddEventListenerAvailable) { targetDIV.addEventListener(type.slice(constants.prefix_on.length, type.length), callback, false); }
+					else if (constants.isAttachEventAvailable) { targetDIV.attachEvent(type, callback); }
+					else { targetDIV[type] = callback; }
+				} else {
+					if (constants.isAddEventListenerAvailable) { targetDIV.removeEventListener(type.slice(constants.prefix_on.length, type.length), callback, false); }
+					else if (constants.isAttachEventAvailable) { targetDIV.detachEvent(type, callback); }
+					else { targetDIV[type] = null; }
+				}
+			}
+		}
+	};
+	window.eventmanager = eventmanager;
+})();;(function(window, document) {
 	var main = {
 		mainContainer: null,
 		container: null,
@@ -78,10 +105,10 @@
 			main.topCenterWidget = document.querySelectorAll(constants.prefix_classSelector + constants.className_topCenterWidget)[0];
 			main.topLeftWidget = document.querySelectorAll(constants.prefix_classSelector + constants.className_topLeftWidget)[0];
 			main.prepareEventsArray();
-			//main.toggleListeners(main.mainContainer, main.events, true);
-			//main.toggleListeners(main.container, main.events, true);
-			main.toggleListeners(main.topCenterWidget, main.events, true);
-			//main.toggleListeners(main.topLeftWidget, main.events, true);
+			//eventmanager.toggleListeners(main.mainContainer, main.events, true);
+			//eventmanager.toggleListeners(main.container, main.events, true);
+			eventmanager.toggleListeners(main.topCenterWidget, main.events, true);
+			//eventmanager.toggleListeners(main.topLeftWidget, main.events, true);
 		},
 		onEnterDesktop: function() { /*console.log('main.onEnterDesktop');*/ },
 		onExitDesktop: function() { /*console.log('main.onExitDesktop');*/ },
@@ -99,22 +126,6 @@
 				{type: 'onmouseout', callback: main.onMouseOut},
 				{type: 'onmouseup', callback: main.onMouseUp}
 			];
-		},
-		toggleListeners: function(targetDIV, eventsArray, isAssigning) {
-			var length = eventsArray.length, type = '', callback = null, i = 0;
-			for (i; i < length; i++) {
-				type = eventsArray[i].type;
-				callback = eventsArray[i].callback;
-				if (isAssigning) {
-					if (constants.isAddEventListenerAvailable) { targetDIV.addEventListener(type.slice(constants.prefix_on.length, type.length), callback, false); }
-					else if (constants.isAttachEventAvailable) { targetDIV.attachEvent(type, callback); }
-					else { targetDIV[type] = callback; }
-				} else {
-					if (constants.isAddEventListenerAvailable) { targetDIV.removeEventListener(type.slice(constants.prefix_on.length, type.length), callback, false); }
-					else if (constants.isAttachEventAvailable) { targetDIV.detachEvent(type, callback); }
-					else { targetDIV[type] = null; }
-				}
-			}
 		},
 		onClick: function(e) {
 			//console.log(e.target);

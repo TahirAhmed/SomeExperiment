@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 		concat: {
 			options: {separator: ';'},
 			app: {
-				src: ['scripts/app/utils.js', 'scripts/app/constants.js', 'scripts/app/resizemanager.js', 'scripts/app/main.js'],
+				src: ['scripts/app/utils.js', 'scripts/app/constants.js', 'scripts/app/resizemanager.js', 'scripts/app/eventmanager.js', 'scripts/app/main.js'],
       			dest: 'scripts/app.js'
 			},
 			plugins: {src: ['scripts/plugins/**/*.js'], dest: 'scripts/plugins.js'}
@@ -37,6 +37,7 @@ module.exports = function(grunt) {
 			plugins: {files: {'scripts/plugins.min.js': ['scripts/plugins.js']}}
 		},
 		watch: {
+			markup: {files: ['index.html'], tasks: ['htmlmin'], options: {nospawn: true}},
 			styles: {files: ['styles/app/**/*.less'], tasks: ['less:app', 'less:app_min'], options: {nospawn: true}},
 			scripts: {files: ['scripts/app/**/*.js'], tasks: ['concat:app', 'uglify:app'], options: {nospawn: true}},
 			plugins: {files: ['scripts/plugins/**/*.js', 'styles/plugins/**/*.css'], tasks: ['concat:plugins', 'uglify:plugins', 'less:plugins', 'less:plugins_min'], options: {nospawn: true}}

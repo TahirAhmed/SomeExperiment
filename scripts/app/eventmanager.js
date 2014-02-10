@@ -1,4 +1,4 @@
-(function(window, document){
+(function(){
 	var eventmanager = {
 		toggleListeners: function(targetDIV, eventsArray, isAssigning) {
 			var length = eventsArray.length, type = '', callback = null, i = 0;
@@ -18,4 +18,4 @@
 		}
 	};
 	window.eventmanager = eventmanager;
-})(window, document);
+})();
