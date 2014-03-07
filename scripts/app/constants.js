@@ -1,5 +1,5 @@
 (function(window, document) {
-	var constants = {
+	window.constants = {
 		breakpoint_MobileTablet: 768,
 		breakpoint_TabletLaptop: 980,
 		breakpoint_LaptopDesktop: 1200,
@@ -8,14 +8,23 @@
 		breakpointLabel_Laptop: 'laptop',
 		breakpointLabel_Desktop: 'desktop',
 		className_container: 'container',
-		className_mainContainer: 'main-container',
+		className_maincontainer: 'maincontainer',
 		className_topCenterWidget: 'top-center-widget',
 		className_topLeftWidget: 'top-left-widget',
+		document_readyState_interactive: 'interactive',
+		document_readyState_complete: 'complete',
+		event_onClick: 'onclick',
+		event_onDoubleClick: 'ondblclick',
+		event_onMouseDown: 'onmousedown',
+		event_onMouseMove: 'onmousemove',
+		event_onMouseOver: 'onmouseover',
+		event_onMouseOut: 'onmouseout',
+		event_onMouseUp: 'onmouseup',
 		isAddEventListenerAvailable: !!(('addEventListener' in window)),
 		isAttachEventAvailable: !!(('attachEvent' in document)),
 		isQuerySelectorAvailable: !!(('querySelector' in document)),
 		prefix_classSelector: '.',
-		prefix_on: 'on'
+		prefix_on: 'on',
+		window_onLoaded: 'load'
 	};
-	window.constants = constants;
 })(window, document);

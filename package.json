@@ -1,6 +1,6 @@
 {
   "name": "SomeExperiment",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A test",
   "main": "gruntfile.js",
   "scripts": {
@@ -9,14 +9,29 @@
   "keywords": [
     "SomeExperiment"
   ],
-  "author": "Tahir Ahmed",
+  "author": "Tahir Ahmed <lukin4ward@gmail.com> (https://twitter.com/tah_med)",
   "license": "BSD-2-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TahirAhmed/SomeExperiment.git"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-watch": "~0.5.3",
     "grunt-contrib-uglify": "~0.2.7",
     "grunt-contrib-less": "~0.9.0",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-htmlmin": "~0.2.0"
+    "grunt-contrib-htmlmin": "~0.2.0",
+    "load-grunt-config": "~0.7.1",
+    "grunt-newer": "~0.6.1",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-connect": "~0.7.0",
+    "grunt-contrib-cssmin": "~0.8.0",
+    "grunt-htmlcompressor": "~0.1.10",
+    "grunt-smushit": "~1.2.0",
+    "grunt-bake": "~0.3.8"
+  },
+  "dependencies": {
+    "time-grunt": "~0.2.9"
   }
 }
